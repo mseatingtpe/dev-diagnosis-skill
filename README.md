@@ -1,4 +1,4 @@
-# Dev Diagnosis
+# Dev Diagnosis.skill
 
 開發需求分診與治理引導工具。
 
