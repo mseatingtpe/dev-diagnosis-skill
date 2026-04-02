@@ -123,8 +123,28 @@ flowchart TD
 - `SKILL.md` — 完整的分診引導邏輯，可作為 Claude skill 使用
 - `_template.md` — 棧點設定檔模板
 
+## 安裝
+
+### Claude Code
+
+將 skill 安裝到你的 git repo 的 `.claude/skills/` 目錄下：
+
+```bash
+# Project-level（僅限該專案使用）
+mkdir -p .claude/skills
+git clone https://github.com/mseatingtpe/dev-diagnosis-skill .claude/skills/dev-diagnosis
+
+# Global（所有專案皆可使用）
+git clone https://github.com/mseatingtpe/dev-diagnosis-skill ~/.claude/skills/dev-diagnosis
+```
+
+安裝後，當你描述開發需求時會自動觸發，也可以手動呼叫 `/dev-diagnosis`。
+
+### Claude.ai
+
+將 `SKILL.md` 的內容貼入 Project instructions 或對話中即可使用（僅支援診斷，不支援落地操作）。
+
 ## 使用方式
 
-1. 將 `SKILL.md` 加入 Claude 的 skill 設定
-2. 當有開發需求時，觸發此 skill 進行分診
-3. 首次使用會先引導你建立棧點設定檔，之後直接進入分診
+1. 當有開發需求時，觸發此 skill 進行分診
+2. 首次使用會先引導你建立棧點設定檔，之後直接進入分診
