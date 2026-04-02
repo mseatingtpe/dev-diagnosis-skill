@@ -2,9 +2,80 @@
 
 開發需求分診與治理引導工具。
 
-從模糊的需求出發，經過結構化診斷，判斷該用什麼方式開發、如何管理。
+*在動手之前，先辨識價值。*
 
-## 流程
+---
+
+## 為什麼做這個
+
+高效率生產垃圾還是垃圾。
+
+每次有人說「我想做一個⋯⋯」，最危險的反應是立刻開始做。該問的問題沒問，該查的東西沒查，做完才發現早就有人做過、根本不需要自動化、或者用錯了工具。
+
+Dev Diagnosis 是一個結構化的分診流程——從模糊的需求出發，經過診斷，判斷該用什麼方式開發、如何管理。它不幫你寫 code，它幫你決定要不要寫、怎麼寫、寫完放哪裡。
+
+四個階段：**診斷** → **選解法** → **分級管理** → **落地**。每個階段結束時確認，再進下一步。
+
+## 棧點（Station）
+
+棧點是你的工作環境——一個組織、一個團隊、或一個專案。每個棧點有自己的技術棧、資安限制、開發規範和既有工具清單。
+
+分診流程會根據你所在的棧點，套用對應的規則來判斷。同樣一個需求，在資安要求嚴格的組織可能走受管開發，在個人專案裡可能是自由開發。
+
+用 `_template.md` 為你的棧點建立設定檔，放在 `stations/` 目錄下。
+
+## 在哪裡使用
+
+這個 skill 可以在 Claude.ai 或 Claude Code 中使用，但能做的事不同：
+
+| | Claude.ai | Claude Code |
+|---|---|---|
+| 對話式分診引導 | v | v |
+| 自動讀取棧點設定檔 | x（需手動貼入） | v |
+| 建立檔案結構、寫 SKILL.md | x | v |
+| 登記到既有 skill 清單 | x | v |
+| 建 repo、操作 git | x | v |
+| 串接 MCP 工具 | x | v |
+
+簡單說：Claude.ai 能「診斷」，Claude Code 能「診斷 + 落地」。
+
+## 安裝
+
+### Claude Code
+
+將 skill 安裝到你的 git repo 的 `.claude/skills/` 目錄下：
+
+```bash
+# Project-level（僅限該專案使用）
+mkdir -p .claude/skills
+git clone https://github.com/mseatingtpe/dev-diagnosis-skill .claude/skills/dev-diagnosis
+
+# Global（所有專案皆可使用）
+git clone https://github.com/mseatingtpe/dev-diagnosis-skill ~/.claude/skills/dev-diagnosis
+```
+
+安裝後，當你描述開發需求時會自動觸發，也可以手動呼叫 `/dev-diagnosis`。
+
+### Claude.ai
+
+將 `SKILL.md` 的內容貼入 Project instructions 或對話中即可使用（僅支援診斷，不支援落地操作）。
+
+## 檔案
+
+```
+dev-diagnosis-skill/
+├── SKILL.md              # 完整的分診引導邏輯
+├── _template.md          # 棧點設定檔模板
+├── stations/             # 各棧點的設定檔
+└── references/           # 補充說明（按需讀取）
+    ├── ai-tool-vs-agent.md
+    └── health-check.md
+```
+
+## 決策流程圖
+
+<details>
+<summary>展開完整流程圖</summary>
 
 ```mermaid
 flowchart TD
@@ -95,56 +166,4 @@ flowchart TD
     LevelOutput --> SkillQ
 ```
 
-## 棧點（Station）
-
-棧點是你的工作環境——一個組織、一個團隊、或一個專案。每個棧點有自己的技術棧、資安限制、開發規範和既有工具清單。
-
-分診流程會根據你所在的棧點，套用對應的規則來判斷。例如同樣一個需求，在資安要求嚴格的組織可能走受管開發，在個人專案裡可能是自由開發。
-
-用 `_template.md` 為你的棧點建立設定檔，放在 `stations/` 目錄下。
-
-## 在哪裡使用
-
-這個 skill 可以在 Claude.ai 或 Claude Code 中使用，但能做的事不同：
-
-| | Claude.ai | Claude Code |
-|---|---|---|
-| 對話式分診引導 | v | v |
-| 自動讀取棧點設定檔 | x（需手動貼入） | v |
-| 建立檔案結構、寫 SKILL.md | x | v |
-| 登記到既有 skill 清單 | x | v |
-| 建 repo、操作 git | x | v |
-| 串接 MCP 工具 | x | v |
-
-簡單說：Claude.ai 能「診斷」，Claude Code 能「診斷 + 落地」。
-
-## 檔案
-
-- `SKILL.md` — 完整的分診引導邏輯，可作為 Claude skill 使用
-- `_template.md` — 棧點設定檔模板
-
-## 安裝
-
-### Claude Code
-
-將 skill 安裝到你的 git repo 的 `.claude/skills/` 目錄下：
-
-```bash
-# Project-level（僅限該專案使用）
-mkdir -p .claude/skills
-git clone https://github.com/mseatingtpe/dev-diagnosis-skill .claude/skills/dev-diagnosis
-
-# Global（所有專案皆可使用）
-git clone https://github.com/mseatingtpe/dev-diagnosis-skill ~/.claude/skills/dev-diagnosis
-```
-
-安裝後，當你描述開發需求時會自動觸發，也可以手動呼叫 `/dev-diagnosis`。
-
-### Claude.ai
-
-將 `SKILL.md` 的內容貼入 Project instructions 或對話中即可使用（僅支援診斷，不支援落地操作）。
-
-## 使用方式
-
-1. 當有開發需求時，觸發此 skill 進行分診
-2. 首次使用會先引導你建立棧點設定檔，之後直接進入分診
+</details>
