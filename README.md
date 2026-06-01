@@ -16,13 +16,15 @@ Dev Diagnosis 是一個結構化的分診流程——從模糊的需求出發，
 
 四個階段：**診斷** → **選解法** → **分級管理** → **落地**。每個階段結束時確認，再進下一步。
 
-## 棧點（Station）
+## 工作站（Workstation）
 
-棧點是你的工作環境——一個組織、一個團隊、或一個專案。每個棧點有自己的技術棧、資安限制、開發規範和既有工具清單。
+工作站是你的工作環境——一個組織、一個團隊、或一個專案。
 
-分診流程會根據你所在的棧點，套用對應的規則來判斷。同樣一個需求，在資安要求嚴格的組織可能走受管開發，在個人專案裡可能是自由開發。
+想像你拿到一台新的工作電腦：你會裝特定的 app、設定 API key、登入需要的帳號、把使用習慣調好。這一整套「為了在某個環境做事而做的配置」，就是一個工作站。每個工作站有自己的技術棧、資安限制、開發規範和既有工具清單。
 
-用 `_template.md` 為你的棧點建立設定檔，放在 `stations/` 目錄下。
+分診流程會根據你所在的工作站，套用對應的規則來判斷。同樣一個需求，在資安要求嚴格的組織可能走受管開發，在個人專案裡可能是自由開發。
+
+用 `_template.md` 為你的工作站建立設定檔，放在 `workstations/` 目錄下。
 
 ## 在哪裡使用
 
@@ -31,7 +33,7 @@ Dev Diagnosis 是一個結構化的分診流程——從模糊的需求出發，
 | | Claude.ai | Claude Code |
 |---|---|---|
 | 對話式分診引導 | v | v |
-| 自動讀取棧點設定檔 | x（需手動貼入） | v |
+| 自動讀取工作站設定檔 | x（需手動貼入） | v |
 | 建立檔案結構、寫 SKILL.md | x | v |
 | 登記到既有 skill 清單 | x | v |
 | 建 repo、操作 git | x | v |
@@ -65,8 +67,8 @@ git clone https://github.com/mseatingtpe/dev-diagnosis-skill ~/.claude/skills/de
 ```
 dev-diagnosis-skill/
 ├── SKILL.md              # 完整的分診引導邏輯
-├── _template.md          # 棧點設定檔模板
-├── stations/             # 各棧點的設定檔
+├── _template.md          # 工作站設定檔模板
+├── workstations/         # 各工作站的設定檔
 └── references/           # 補充說明（按需讀取）
     ├── ai-tool-vs-agent.md
     └── health-check.md
@@ -90,7 +92,7 @@ dev-diagnosis-skill/
 
 ## 管理
 - 分級：[受管開發 / 輕量管理 / 自由開發]
-- 具體行動：[依棧點設定檔列出]
+- 具體行動：[依工作站設定檔列出]
 
 ## 落地
 - 產出形式：[Skill / 腳本 / Prompt template / 其他]
@@ -106,10 +108,10 @@ dev-diagnosis-skill/
 
 ```mermaid
 flowchart TD
-    Start([開發需求]) --> Station{棧點設定檔存在？}
-    Station -->|否| CreateStation[引導建立棧點設定檔]
-    CreateStation --> FastTrack
-    Station -->|是| FastTrack
+    Start([開發需求]) --> Workstation{工作站設定檔存在？}
+    Workstation -->|否| CreateWorkstation[引導建立工作站設定檔]
+    CreateWorkstation --> FastTrack
+    Workstation -->|是| FastTrack
     FastTrack{使用者已經想清楚了？}
     FastTrack -->|是| QuickReport([直接整理分診報告 → 確認])
     FastTrack -->|否| Entry
