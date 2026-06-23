@@ -1,0 +1,5 @@
+# 私人檔案 — 不進公開方法論 repo（本地保留供 skill 使用）
+# 公開 repo 只放方法論：SKILL.md / README.md / _template.md / references/
+# 各工作站的實際設定屬私人實例，不公開，走各自的 fork
+/ROADMAP.md
+/workstations/
